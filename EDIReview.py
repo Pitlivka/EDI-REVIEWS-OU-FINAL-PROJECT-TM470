@@ -87,7 +87,7 @@ class SearchBar(BoxLayout):
     # search bar input. The input is then passed to GET URL used by LocationIQ Geolocation services.
     def search_locations(self):
         print(self.search_input.text)
-        url = 'https://eu1.locationiq.com/v1/search?key=pk.f14cc68d886e42bd85d39bfe3cf0f669&q&countrycodes=gb&format' \
+        url = 'API CODE PLACE' \
               '=json&json_callback=<string>&'
         params = {'q': self.search_input.text}
         req = PreparedRequest()
