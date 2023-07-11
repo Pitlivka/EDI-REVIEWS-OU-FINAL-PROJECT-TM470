@@ -43,7 +43,6 @@ class LoginScreen(BoxLayout):
             content = BoxLayout(orientation='vertical', padding=10, spacing=10)
             message_label = Label(text='Invalid username or password. Please try again.')
             try_again_button = Button(text='Try Again', size_hint=(None, None), size=(100, 40))
-
             popup = Popup(title='Wrong Credentials', size_hint=(None, None), size=(400, 200))
             content.add_widget(message_label)
             content.add_widget(try_again_button)
@@ -83,25 +82,21 @@ class SearchBar(BoxLayout):
     green = 210 / 255
     blue = 244 / 255
     alpha = 0.31
-
     Window.clearcolor = (red, green, blue, alpha)
-
     # Search_locations function which uses LocationIQ API link to fetch the locations and their details based on the
     # search bar input. The input is then passed to GET URL used by LocationIQ Geolocation services.
     def search_locations(self):
         print(self.search_input.text)
-        url = 'https://eu1.locationiq.com/v1/search?key="-API key goes here-"&countrycodes=gb&format' \
+        url = 'https://eu1.locationiq.com/v1/search?key=pk.f14cc68d886e42bd85d39bfe3cf0f669&q&countrycodes=gb&format' \
               '=json&json_callback=<string>&'
         params = {'q': self.search_input.text}
         req = PreparedRequest()
         req.prepare_url(url, params)
         edited_url = req.url
-
         req = requests.get(edited_url)
         result = req.json()
         print(result)
         self.search_results.clear_widgets()
-
         # Location results in json format are parsed and each location is then send to Kivy code to be added as
         # widget and displayed under search bar section. Kivy code implements the visual elements.
         for entry in result:
@@ -507,3 +502,4 @@ class SearchApp(App):
 
 if __name__ == '__main__':
     SearchApp().run()
+

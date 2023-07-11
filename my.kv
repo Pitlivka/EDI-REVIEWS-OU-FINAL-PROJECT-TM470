@@ -2,7 +2,6 @@
 #:import GridLayout kivy.uix.gridlayout.GridLayout
 
 
-
 <LoginScreen>:
     orientation: 'vertical'
     size_hint_y: (1, None)
@@ -221,13 +220,13 @@
             size_hint_x: 0.25
             width: dp(150)  # Set the width of the button
             height: dp(50)
-            background_normal: 'button_bg.png'  # Replace 'button_bg.png' with the path to your button background image
-            background_down: 'button_bg_pressed.png'  # Replace 'button_bg_pressed.png' with the path to your button pressed background image
-            background_color: (0.3, 0.6, 0.9, 1)  # Adjust the RGB values to set the button color
-            border_radius: [20]  # Set the corner radius to achieve rounded edges
-            text_size: self.size  # Allow text wrapping within the button
-            halign: 'center'  # Center align the text horizontally
-            valign: 'middle'  # Center align the text vertically
+            background_normal: 'button_bg.png'
+            background_down: 'button_bg_pressed.png'
+            background_color: (0.3, 0.6, 0.9, 1)
+            border_radius: [20]
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
             on_press:
                 root.parent.parent.parent.parent.location_id = root.location['place_id']
                 root.show_profile_popup()
@@ -379,7 +378,6 @@
                 id: option_grid
                 size_hint_y: None
                 height: self.minimum_height
-
 <AddReviewPopup@Popup>:
     title: "Add Review"
     auto_dismiss: False
