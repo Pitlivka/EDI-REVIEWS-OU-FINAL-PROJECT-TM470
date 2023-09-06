@@ -1,7 +1,7 @@
 #:import BoxLayout kivy.uix.boxlayout.BoxLayout
 #:import GridLayout kivy.uix.gridlayout.GridLayout
 
-
+# LoginScreen GUI section containing labels and buttons.
 <LoginScreen>:
     orientation: 'vertical'
     size_hint_y: (1, None)
@@ -17,7 +17,7 @@
 
         # Header label
         Label:
-            text: 'EdiReviews'
+            text: 'EDI-Reviews'
 
             size_hint: 1, None
             height: self.texture_size[1] + dp(10)  # Adjust the height as needed
@@ -47,7 +47,7 @@
             font_size: '13sp'  # Adjust the font size as needed
             font_name: 'Arial'  # Change the font style to 'Arial' or choose a different font
             markup: True
-            on_ref_press: print('Register now clicked')
+            on_ref_press: root.open_registration_form()
 
 
         # Username input
@@ -67,24 +67,269 @@
             height: dp(30)  # Adjust the height as needed
             pos_hint: {'center_x': 0.5}
 
-        # Forgot password text link
-        Label:
-            text: '[color=blue]Forgot password?[/color]'
-            size_hint: 0.45, None
+        ClickableLabel:
+            text: '[color=black]Forgot password?[/color]  [color=blue][u][ref=register]Reset here![/ref][/u][/color]'
+            size_hint: 0.68, None
             height: self.texture_size[1] + dp(10)  # Adjust the height as needed
             halign: 'center'  # Center the label text
             font_size: '13sp'  # Adjust the font size as needed
             font_name: 'Arial'  # Change the font style to 'Arial' or choose a different font
             markup: True
-            on_touch_down: if self.collide_point(*args[1].pos): print('Forgot password clicked')
+            on_ref_press: root.open_reset()
 
         Button:
             text: 'Log in'
             size_hint: 0.4, None
             pos_hint: {'center_x': 0.5}
-            height: dp(30)  # Adjust the height as needed
+            height: dp(40)  # Adjust the height as needed
             on_release: root.login()
+            background_color: (0.4, 0.5, 0.9, 1)
+            font_size: '28sp'
+            bold: True
 
+# Reset password popup whcich asks for users email address as input.
+
+<ResetPasswordPopup>:
+    title: "Reset password"
+    size_hint: None, None
+    size: 400, 200  # Increase the height of the popup
+    auto_dismiss: False
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        canvas.before:
+            Color:
+                rgba: 155/255, 180/255, 175/255, 0.82  # Set background color to your desired value
+
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Enter your e-mail address"
+            size_hint_y: 0.5
+
+        TextInput:
+            id: email_input
+            multiline: False
+            size_hint_y: None  # Limit height to one line
+            height: dp(35)
+            hint_text: "e-mail address"
+
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+
+            Button:
+                text: "Request reset link"
+                height: dp(50)
+                width: dp(183)
+                on_release: root.dismiss()
+                bold: True
+                background_color: (0.4, 0.5, 0.9, 1)
+
+            Button:
+                text: "Return"
+                height: dp(50)
+                width: dp(183)
+                on_release: root.dismiss()
+                bold: True
+                background_color: (0.4, 0.5, 0.9, 1)
+
+
+# Registration form popup which ocntains all of the texfield and drop down sections for user to select when they register.
+
+<RegistrationForm@Popup>:
+    size_hint: None, None
+    auto_dismiss: False
+    size: 400, 800
+    height: 800
+
+    BoxLayout:
+        orientation: 'vertical'
+
+    # Larger spacing between elements
+        padding: 20
+        pos_hint: {'top': 1}
+
+        canvas.before:
+            Color:
+                rgba: 155/255, 180/255, 175/255, 0.82  # Set background color to white
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+              # Larger spacing between elements
+            spacing: 25
+
+            Label:
+                text: "Name:"
+                color: 0, 0, 0, 1
+                bold: True
+                font_size: '20sp'
+
+
+
+            TextInput:
+                id: name_input
+                size_hint_y: None
+                hint_text: 'Name'
+                multiline: False
+                height: 40
+
+            Label:
+                text: "Email:"
+                color: 0, 0, 0, 1
+                bold: True
+                font_size: '20sp'
+
+            TextInput:
+                size_hint_y: None
+                id: email_input
+                hint_text: 'Email'
+                multiline: False
+                height: 40
+
+
+            Label:
+                text: "Password:"
+                color: 0, 0, 0, 1
+                bold: True
+                font_size: '20sp'
+
+            TextInput:
+                size_hint_y: None
+                id: password_input
+                hint_text: 'Password'
+                multiline: False
+                password: True
+                height: 40
+
+            Label:
+                text: "Re-enter the password:"
+                color: 0, 0, 0, 1
+                bold: True
+                font_size: '20sp'
+
+            TextInput:
+                size_hint_y: None
+                id: reenter_password_input
+                hint_text: 'Reenter Password'
+                multiline: False
+                password: True
+                height: 40
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+                spacing: 5
+
+                Label:
+                    text: "Age:"
+                    color: 0, 0, 0, 1
+                    bold: True
+                    font_size: '20sp'
+
+
+                Spinner:
+                    size_hint_x: None
+                    id: age_input
+                    width: 200
+                    text: "Select Age"
+                    values: [str(i) for i in range(15, 91)] + ["90+"]
+                    background_color: 0.4, 0.5, 0.9, 1
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+                spacing: 5
+
+                Label:
+                    text: "Background:"
+                    color: 0, 0, 0, 1
+                    bold: True
+                    font_size: '20sp'
+
+                Spinner:
+                    size_hint_x: None
+                    id: background_input
+                    width: 200
+                    text: "Select Ethnic Background"
+                    values: ["White – British", "White – Irish", "White – Other", "Asian – Indian", "Asian – Pakistani", "Asian – Bangladeshi", "Asian – Other", "Black – African", "Black – Caribbean", "Black – Other", "Chinese", "Mixed – White & Asian", "Mixed – White & Black Afr.", "Mixed – White & Black Carib.", "Mixed – Other", "Prefer not to disclose"]
+                    background_color: 0.4, 0.5, 0.9, 1
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+                spacing: 5
+
+                Label:
+                    text: "Pronouns:"
+                    color: 0, 0, 0, 1
+                    bold: True
+                    font_size: '20sp'
+
+                Spinner:
+                    id: pronounces_input
+                    size_hint_x: None
+                    width: 200
+                    text: "Select one"
+                    values: ["she/her", "he/him", "they/them"]
+                    background_color: 0.4, 0.5, 0.9, 1
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: 40
+
+
+                Label:
+                    text: "Sexual orientation:"
+                    color: 0, 0, 0, 1
+                    bold: True
+                    font_size: '20sp'
+
+                Spinner:
+                    id: sexual_orientation_input
+                    size_hint_x: None
+                    width: 200
+                    text: "Select one"
+                    values: ["Heterosexual", "Gay", "Lesbian", "Bisexual", "Pansexual", "Asexual", "Queer", "Polysexual", "Not selected"]
+                    background_color: 0.4, 0.5, 0.9, 1
+
+        BoxLayout:
+            size_hint: None, None
+            size: 200, 75
+            spacing: 5
+
+            Button:
+                text: 'Register'
+                size_hint: None, None
+                size: 190, 50
+                on_release: root.register()
+                font_size: '29sp'
+                bold: True
+                background_color: (0.4, 0.5, 0.9, 1)
+
+
+            Button:
+                text: 'Cancel'
+                size_hint: None, None
+                size: 190, 50
+                on_release: root.dismiss()
+                font_size: '29sp'
+                bold: True
+                background_color: (0.4, 0.5, 0.9, 1)
+
+# Navigation panel section settings which contain buttons for "show profile" and " log-out "
 <NavigationPanel@RelativeLayout>:
     size_hint: (None, None)
     size: '450dp', '25dp'
@@ -105,6 +350,7 @@
         height: '25dp'
         font_size: '14sp'
         pos_hint: {'center_y': 0.5, 'x': 0.02}
+        on_release: root.show_profile()
 
     Button:
         text: 'Logout'
@@ -117,7 +363,7 @@
 
 
 
-
+# Search bar section which takes the input from the user and then returns the results under.
 <SearchBar>:
     search_input: search_input_id
     search_results: grid_layout_id
@@ -133,7 +379,7 @@
             pos_hint: {'top': 2.79, 'left': 1}
 
         Label:
-            text: 'EdiReviews'
+            text: 'EDI-Reviews'
             font_size: '63sp'
             font_name: "C:\\Users\\pitli\\PycharmProjects\\ReviewApp\\venv\\Lib\\site-packages\\kivy\\data\\fonts\\FascinateInline-Regular.ttf"
 
@@ -157,14 +403,26 @@
         Button:
             text: 'Search'
             size_hint: (None, None)
-            size: '150dp', '45dp'
+            size: '300dp', '45dp'
             pos_hint: {'top': 1.5, 'center_x': 0.5}
-            font_size: '18sp'
+            font_size: '30sp'
             background_normal: 'button_bg.png'  # Replace 'button_bg.png' with the path to your button background image
             background_down: 'button_bg_pressed.png'  # Replace 'button_bg_pressed.png' with the path to your button pressed background image
             background_color: (0.3, 0.6, 0.9, 1)  # Adjust the RGB values to set the button color
             border_radius: [20]  # Set the corner radius to achieve rounded edges
             on_press: root.search_locations()
+            italic: True
+            color: 0,0,0,1
+            bold: True
+            background_color: (0.4, 0.5, 0.9, 1)
+
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1  # Dark green color
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
+
 
         ScrollView:
             scroll_y: 1  # Set scroll_y to 1 to start at the top
@@ -179,15 +437,14 @@
                 cols: 1
                 size_hint_y: None
                 height: self.minimum_height + dp(200)  # Increase the height by 200dp
-
                 padding: (10, 0)
                 spacing: 5
 
 
-
+# Location result section which contains results of the locations dipslayed after search button is selected.
+# It also contains button which opens the locations profile.
 
 <LocationResult>:
-
     size_hint: (1, None)
     height: 150
     padding: 50
@@ -209,37 +466,51 @@
         Label:
             text: root.location['display_name']
             font_size: 18
-            size_hint_x: 0.75
+            size_hint_x: 0.80
             text_size: self.width, None
             halign: 'left'
             valign: 'top'
             color: 0, 0, 0, 1  # Set text color to black
-
+            bolt: True
         Button:
             text: "Open profile"
-            size_hint_x: 0.25
+            size_hint_x: 0.20
             width: dp(150)  # Set the width of the button
             height: dp(50)
             background_normal: 'button_bg.png'
             background_down: 'button_bg_pressed.png'
-            background_color: (0.3, 0.6, 0.9, 1)
+            background_color: (0.4, 0.5, 0.9, 1)
             border_radius: [20]
             text_size: self.size
+            width: dp(50)
             halign: 'center'
+            color: 0,0,0,1
             valign: 'middle'
             on_press:
                 root.parent.parent.parent.parent.location_id = root.location['place_id']
                 root.show_profile_popup()
                 root.add_location_to_database()
+                root.location = root.location
+
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1  # Dark green color
+                Line:
+                    width: 2
+                    rectangle: self.x, self.y, self.width, self.height
 
 
-
+# Review profile popup settings which open location profile section
+# It contains buttons for "Add the review", "return" and "word search button" which will filter the reviews displayed based
+# on the search word written by the user.
 
 <ReviewProfilePopup@Popup>:
     title: "LOCATION PROFILE"
     auto_dismiss: False
     size_hint: None, None
-    size: 450, 800
+    size: dp(450), dp(800)  # Adjust the values as needed
+
+
 
     BoxLayout:
         orientation: 'vertical'
@@ -247,7 +518,7 @@
         padding: 5
         canvas.before:
             Color:
-                rgba: 155/255, 180/255, 209/255, 0.82  # Set background color to white
+                rgba: 155/255, 180/255, 175/255, 0.82  # Set background color to white
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -260,7 +531,7 @@
                 id: display_name_label
                 text: root.display_name
                 color: 0, 0, 0, 1  # Black color
-                font_size: 18
+                font_size: 20
                 width: self.texture_size[0]
                 text_size: (self.width, None)
                 halign: 'left'
@@ -279,15 +550,33 @@
             Button:
                 text: "Add new review"
                 width: "150dp"
-                background_color: 0.5, 0.5, 0.5, 1  # Replace with your desired color
                 on_release: root.show_review_popup()
+                background_color: (0.4, 0.5, 0.9, 1)
 
             Button:
                 text: "Return"
                 width: "150dp"
-                background_color: 0.5, 0.5, 0.5, 1  # Replace with your desired color
                 on_release: root.dismiss()
+                background_color: (0.4, 0.5, 0.9, 1)
 
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            spacing: 10
+
+            TextInput:
+                id: search_input
+                hint_text: "Word search "
+                multiline: False
+                width: "200dp"
+
+            Button:
+                text: "Search"
+                width: "100dp"
+                on_release: root.on_open(search_input.text)
+                background_color: (0.4, 0.5, 0.9, 1)
         BoxLayout:
             size_hint_y: None
             height: "30dp"
@@ -300,6 +589,7 @@
                 color: 0, 0, 0, 1  # Black color
                 valign: 'middle'
                 halign: 'left'
+
 
 
         ScrollView:
@@ -315,6 +605,105 @@
                 height: self.minimum_height + dp(20)
 
 
+
+<ToggleFilterCheckbox@CheckBox>:
+    on_active: app.update_filter(self.text, self.active)
+
+# Profile popup code responsible for showing the user profile elements such as the user details
+# and the reviews ever posted by the user.
+<ProfilePopup>:
+    title: "User Profile"
+    size_hint: None, None
+    size: 450, 800  # Set the desired size of the popup
+
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 155/255, 180/255, 175/255, 0.82
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        orientation: "vertical"
+        spacing: dp(20)
+        padding: dp(20)
+
+        RelativeLayout:
+            size_hint: (None, None)
+            size: (self.parent.width - dp(40), self.height)  # Adjust for padding
+
+            # Profile Info Label
+            Label:
+                id: profile_info_label
+                text: ""
+                halign: 'left'
+                valign: 'top'
+                size_hint: (None, None)
+                size_hint_y: None
+                size_hint_x: None
+                width: self.texture_size[0]
+                color: 0, 0, 0, 1  # Black color
+
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1  # Set the left half of the window
+            size_hint_y: None  # Allow the BoxLayout to determine its own height
+            height: self.minimum_height  # Adjust the height based on the content
+            Button:
+                text: "Edit user data"
+                size_hint_y: None
+                height: dp(40)
+                on_release: root.edit_user_data()  # Dismiss the popup when the button is clicked
+                bold: True
+                italic: True
+                font_size: '25sp'
+                background_color: (0.4, 0.5, 0.9, 1)  # Slightly lighter blue color
+
+            # Back Button
+            Button:
+                text: "Back to search"
+                size_hint_y: None
+                height: dp(40)
+                on_release: root.dismiss()  # Dismiss the popup when the button is clicked
+                bold: True
+                italic: True
+                font_size: '25sp'
+                background_color: (0.4, 0.5, 0.9, 1)  # Slightly lighter blue color
+
+
+        Label:
+            text: '[u][b][color=000000]History of submitted reviews:[/color][/b][/u]'
+            size_hint_y: None
+            height: dp(45)
+            font_size: '25sp'
+            color: 0, 0, 0, 1
+            markup: True
+            bold: True
+
+
+
+        # Scrollview for Reviews
+        ScrollView:
+            title: "History of submitted reviews:"
+            size_hint_x: None  # Allow specifying an explicit width
+            width: self.parent.width - dp(30) # Set the width of the ScrollView to match its parent
+            bar_width: "12dp"  # Add this line to enable mouse scroll
+
+            GridLayout:
+                id: reviews_layout
+                cols: 1
+                spacing: dp(40) * reviews_layout.cols
+                padding: dp(0), dp(25), dp(0), 0
+                size_hint_x: None  # Allow specifying an explicit width
+                width: self.parent.width   # Set the width of the GridLayout to match its parent
+                size_hint_y: None
+                height: self.minimum_height  # Allow the GridLayout to grow with its content
+                color: 0, 0, 0, 1  # Black color
+                bold: True  # Make the text bold
+
+# Report popup settings which ask user to tipe the report in to the text field and then submitt it by pressing
+# the submit button or canceling and returning back by pressing "return".
 <ReportPopup>:
     title: "Report Review"
     size_hint: None, None
@@ -324,6 +713,14 @@
     BoxLayout:
         orientation: "vertical"
         padding: 10
+
+        canvas.before:
+            Color:
+                rgba: 155/255, 180/255, 175/255, 0.82  # Set background color to your desired value
+
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
         Label:
             text: "Please provide details of the issue:"
@@ -339,13 +736,15 @@
             size_hint_y: 0.2
             on_release: root.submit_report(report_input.text)
             on_release: root.dismiss()
+            background_color: (0.4, 0.5, 0.9, 1)
 
         Button:
             text: "Return"
             size_hint_y: 0.2
             on_release: root.dismiss()
+            background_color: (0.4, 0.5, 0.9, 1)
 
-
+# Module responsible for multiset options being available.
 <MultiSelectSpinnerOption>:
     BoxLayout:
         CheckBox:
@@ -378,18 +777,23 @@
                 id: option_grid
                 size_hint_y: None
                 height: self.minimum_height
+
+# Section responsible for add review form which enables the user to be able to select Tags, Rating on the slider, and text input field
+# where user can write the review.
+# Section also contains two buttons " submit " and " cancel "
 <AddReviewPopup@Popup>:
-    title: "Add Review"
+    title: "ADD REVIEW"
     auto_dismiss: False
     size_hint: None, None
     size: 450, 800
-    rev_name: rev_name_input.text
-    rev_background: rev_background_input.text
+
+
     rev_tags: []
     rev_comment: rev_comment_input.text
     rev_rating: rev_rating_slider.value
-    rev_sex_orientation: rev_sex_orientation_input.text
-    rev_pronounces: rev_pronounces_input.text
+
+
+
 
     ScrollView:
         BoxLayout:
@@ -400,86 +804,18 @@
             spacing: 5
             canvas.before:
                 Color:
-                    rgba: 1, 1, 1, 1
+                    rgba: 155/255, 180/255, 175/255, 0.82  # Set background color to white
+
                 Rectangle:
                     pos: self.pos
                     size: self.size
 
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint_y: None
-                height: 40
-
-                Label:
-                    text: "Name:"
-                    color: 0, 0, 0, 1
-
-                TextInput:
-                    id: rev_name_input
-                    multiline: False
-                    write_tab: False
-                    width: 200
-                    height: 40
-
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint_y: None
-                height: 40
-
-                Label:
-                    text: "Background:"
-                    color: 0, 0, 0, 1
-
-                Spinner:
-                    id: rev_background_input
-                    text: "Select Ethnic Background"
-                    values:["White – British", "White – Irish", "White – Other", "Asian – Indian", "Asian – Pakistani", "Asian – Bangladeshi", "Asian – Other", "Black – African", "Black – Caribbean", "Black – Other", "Chinese", "Mixed – White & Asian", "Mixed – White & Black Afr.", "Mixed – White & Black Carib.", "Mixed – Other", "Prefer not to disclose"]
-
-                    size_hint: None, None
-                    width: 200
-                    height: 40
-
-
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint_y: None
-                height: 40
-
-                Label:
-                    text: "Pronouns:"
-                    color: 0, 0, 0, 1
-
-                Spinner:
-                    orientation: "horizontal"
-                    id: rev_pronounces_input
-                    text: "Select one"
-                    values: ["she/her", "he/him", "they/them"]
-                    size_hint: None, None
-                    width: 200
-                    height: 40
-
-            BoxLayout:
-                orientation: "horizontal"
-                size_hint_y: None
-                height: 40
-
-                Label:
-                    text: "Sexual orientation:"
-                    color: 0, 0, 0, 1
-
-                Spinner:
-                    id: rev_sex_orientation_input
-                    text: "Select one"
-                    values: ["Heterosexual", "Homosexual", "Bisexual", "Pansexual", "Asexual", "Queer", "Polysexual", "Not selected"]
-                    size_hint: None, None
-                    width: 200
-                    height: 40
 
             BoxLayout:
                 orientation: "vertical"
                 size_hint_y: None
                 height: self.minimum_height  # Adjust the height based on content
-                padding: 0, 0, 0, 0
+                padding: -5, 0, 0, 0
                 BoxLayout:
                     orientation: "horizontal"
                     size_hint_y: None
@@ -490,6 +826,8 @@
                         color: 0, 0, 0, 1
                         size_hint_x: None
                         width: 100
+                        bold: True
+                        font_size: '16sp'
 
                 GridLayout:
                     id: positive_tags_box
@@ -505,6 +843,8 @@
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
+
 
                     RoundedToggleButton:
                         id: tag2
@@ -513,6 +853,7 @@
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
                     RoundedToggleButton:
                         id: tag3
@@ -521,21 +862,42 @@
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
 
                     RoundedToggleButton:
-                        id: tag6
+                        id: tag4
                         text: "Welcoming"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
+
+
+                    RoundedToggleButton:
+                        id: tag5
+                        text: "Safe space"
+                        size_hint: None, None
+                        width: 200
+                        height: self.texture_size[1]
+                        on_release: root.update_tags()
+                        color: 0, 0, 0, 1
+
+                    RoundedToggleButton:
+                        id: tag6
+                        text: "Relaxed"
+                        size_hint: None, None
+                        width: 200
+                        height: self.texture_size[1]
+                        on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
             BoxLayout:
                 orientation: "vertical"
                 size_hint_y: None
                 height: self.minimum_height  # Adjust the height based on content
-                padding: 0, 0, 0, 0
+                padding: -5, 0, 0, 0
                 BoxLayout:
                     orientation: "horizontal"
                     size_hint_y: None
@@ -546,6 +908,8 @@
                         color: 0, 0, 0, 1
                         size_hint_x: None
                         width: 100
+                        bold: True
+                        font_size: '16sp'
 
                 GridLayout:
                     id: negative_tags_box
@@ -555,52 +919,58 @@
                     height: self.minimum_height  # Adjust the height based on content
 
                     RoundedToggleButton:
-                        id: tag5
+                        id: tag7
                         text: "Homophobic"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
                     RoundedToggleButton:
-                        id: tag6
+                        id: tag8
                         text: "Transphobic"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
                     RoundedToggleButton:
-                        id: tag7
+                        id: tag9
                         text: "Disability Discrimination"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
                     RoundedToggleButton:
-                        id: tag8
+                        id: tag10
                         text: "Racist"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
                     RoundedToggleButton:
-                        id: tag9
+                        id: tag11
                         text: "Xenophobic"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
                     RoundedToggleButton:
-                        id: tag10
+                        id: tag12
                         text: "Difficult to access"
                         size_hint: None, None
                         width: 200
                         height: self.texture_size[1]
                         on_release: root.update_tags()
+                        color: 0, 0, 0, 1
 
 
 
@@ -614,6 +984,8 @@
                 Label:
                     text: "Rating: {}".format(rev_rating_slider.value)
                     color: 0, 0, 0, 1
+                    bold: True
+                    font_size: '16sp'
 
                 Slider:
                     id: rev_rating_slider
@@ -632,17 +1004,20 @@
             BoxLayout:
                 orientation: "horizontal"
                 size_hint_y: None
-                height: 40
+                height: 75
 
                 Label:
                     text: "Review content:"
                     color: 0, 0, 0, 1
+                    bold: True
+                    font_size: '30sp'
+
 
             TextInput:
                 id: rev_comment_input
                 multiline: True
                 size_hint_y: None
-                height: 200
+                height: 285
 
             BoxLayout:
                 orientation: "horizontal"
@@ -652,10 +1027,12 @@
                 Button:
                     text: "Cancel"
                     on_release: root.dismiss()
+                    background_color: (0.4, 0.5, 0.9, 1)
 
                 Button:
                     text: "Submit"
+                    background_color: (0.4, 0.5, 0.9, 1)
                     on_release:
-                        root.process_review(root.rev_name, root.rev_background, root.rev_tags, root.rev_comment, root.rev_rating, root.rev_sex_orientation, root.rev_pronounces)
+                        root.process_review(root.rev_tags, root.rev_comment, root.rev_rating)
                         root.update_average_rating()
                         root.dismiss()
