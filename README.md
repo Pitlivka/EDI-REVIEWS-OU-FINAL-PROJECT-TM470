@@ -13,5 +13,23 @@ The app developed using iterative and incremental development methodology based 
 The GUI is developed with KIVI, and the app will be deployed for Android OS. Every search location will be saved to the database with its specific ID tag and other information provided during review submission. 
 
 
+# Images showing the app executed in PyCharm:
 
 ![image](https://github.com/Pitlivka/finall-roject-public/assets/88449521/4f903732-029d-4e10-8d30-59d77cc77817)
+
+
+![image](https://github.com/Pitlivka/finall-roject-public/assets/88449521/632e6c39-dc17-41f6-a82f-8c8c9546c5fd)
+
+
+![image](https://github.com/Pitlivka/finall-roject-public/assets/88449521/3d4010a2-60fe-4f29-bec4-12abdc425dba)
+
+
+![image](https://github.com/Pitlivka/finall-roject-public/assets/88449521/caf57029-9066-4387-be25-951508e9e8f2)
+
+
+![image](https://github.com/Pitlivka/finall-roject-public/assets/88449521/0ad4c7fd-62d3-43a6-b0a2-47a9f6ce8e5a)
+
+
+Unfortunatelly I was unabble to deploy the app to Android due to compatibility issues between KIVI and C language.
+The Buildozer tool which supposes to package the mobbile applications is failing to create the .apk file.
+I have not been able to find the solution to this problem yet and I am not sure what is the issue.
