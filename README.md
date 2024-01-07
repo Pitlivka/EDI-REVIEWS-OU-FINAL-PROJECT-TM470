@@ -1,7 +1,7 @@
 # EDI REVIEWS
 TM470-project-public EMA version without API URL
 Review app created with Python, SQL and KIVY GUI framework.
-# Description: 
+# Description:
 The lack of information on discriminatory practices at certain locations can put people from minority groups in uncomfortable and potentially dangerous situations. While there are review platforms available, they do not always provide specific details that are relevant to these groups. An anti-discrimination review application, specifically designed for people who belong to the minorities, could make a significant contribution towards inclusivity, diversity, and safety for all. By enabling users to submit and read reviews relevant to them, the proposed "EDI-Reviews" application could provide a much-needed solution to this issue. EDI in the name stands for the Equality, diversity, and inclusion.
 
 The application will also provide accessibility features to make it user-friendly for everyone, while a reporting system will allow users to report suspicious reviews, therefore ensuring that the application is used responsibly. Data collected through the application could also be used to raise awareness with the government, potentially leading to positive changes for the  minorities.
