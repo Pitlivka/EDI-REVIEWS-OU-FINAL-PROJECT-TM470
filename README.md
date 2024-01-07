@@ -11,3 +11,7 @@ Overall, the proposed "EDI-Review" application has the potential to create a saf
 
 The app developed using iterative and incremental development methodology based on Scrum agile method. I will act as the user and developer, setting requirements and testing them myself. PyCharm and Python will be used for development, and the data will be saved in a MySQL local database server. GEO location API by LocationIq will be used for venue search.
 The GUI is developed with KIVI, and the app will be deployed for Android OS. Every search location will be saved to the database with its specific ID tag and other information provided during review submission. 
+
+
+
+![image](https://github.com/Pitlivka/finall-roject-public/assets/88449521/4f903732-029d-4e10-8d30-59d77cc77817)
